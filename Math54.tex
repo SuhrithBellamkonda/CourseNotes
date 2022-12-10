@@ -1,0 +1,467 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{\textbf{Math 54: Linear Algebra and Differential Equations}}
+\author{Suhrith Bellamkonda}
+\date{December 2022}
+
+\begin{document}
+
+\maketitle{}
+\begin{center}
+    University of California, Berkeley
+\end{center}
+\begin{center}
+    Professor Lin Lin, Fall 2022
+\end{center}
+\textit{These notes are not comprehensive nor fully rigorous. They are simply a compilation of  key theorems and definitions covered in my experience of the class.}
+
+\section{Linear Equations}
+
+A \textbf{linear equation} in the variables $x_1,\cdots,x_n$ is an equation that can be written in the form
+
+\begin{equation}
+a_1x_1+\cdots+a_nx_n = b 
+\end{equation}
+\hfill \newline
+A \textbf{linear system} is a collection of linear equations. A \textbf{solution} of a linear system is a list $(s_1,\cdots,s_n)$ of numbers making each equation a true statement when substituted for $(x_1,\cdots,x_n)$, respectively. The set of all possible solutions is called the \textbf{solution set} of the linear system. Two linear systems are equivalent if they have the same solution set.
+
+\hfill \newline
+A linear system can have 0, 1, or $\infty$ solutions. If a system has no solutions, it is \textbf{inconsistent}. Else, it is \textbf{consistent}.
+
+\hfill \newline The essential information of a linear system can be recorded compactly in a rectangular array called a \textbf{matrix}. For a 2-dimensional system of linear equations given by $ax+by=c$ and $dx+ey=f$, the \textbf{coefficient matrix} is written as 
+$\begin{Bmatrix}
+a & b\\
+d & e
+\end{Bmatrix}$
+and the \textbf{augmented matrix} is written as
+$\begin{Bmatrix}
+a & b & c\\
+d & e & f
+\end{Bmatrix}.$
+
+\hfill \newline
+A rectangular matrix is in \textbf{row echelon form} if it has the following properties: (1) All nonzero rows are above any rows of all zeros, (2) Each leading entry of a row is in a column to the right of the leading entry of the row above it, (3) All entries in a column below a leading entry are zeros. If a matrix meets these additional criteria, then it is in \textbf{reduced row echelon form}: (4) The leading entry (leftmost nonzero entry) in each nonzero row is 1, (5) Each leading 1 is the only nonzero entry in its column. 
+
+\hfill \newline
+To achieve an echelon form, use the following \textbf{elementary row operations} on an augmented matrix: (1) Replace one row by the sum of itself and the multiple of another row, (2) Interchange two rows, (3) Multiply all entries in a row by a nonzero constant. Once the reduced row echelon form is achieved, the solution to the system is indicated by the rightmost column of the resultant matrix.
+
+\hfill \newline A \textbf{pivot position} in a matrix is one that corresponds to a leading 1 in the reduced echelon form of the matrix. \textbf{Pivot columns} are those that contain pivot variables. Variables corresponding to pivot columns are called \textbf{basic variables}. Others are called \textbf{free variables}.
+
+\hfill \newline \noindent THEOREM. Each matrix is row equivalent to one and only one reduced echelon matrix.
+
+\hfill \newline \noindent THEOREM. A linear system is consistent iff the rightmost column of the augmented matrix is not a pivot column. If a linear system is consistent, then the solution set contains either a unique solution (no free variables) or infinitely many solutions ($>1$ free variable).
+
+\hfill \newline
+\textbf{Algebraic properties of vectors in $\Re^n$ - omitted.}
+
+\hfill \newline Given vectors $\mathbf{v_1},\dots,\mathbf{v_p}$ in $\Re^n$ and given scalars $c_1,\dots,c_p$, the vector
+\begin{equation}
+\mathbf{y} = c_1\mathbf{v_1}+\cdots+c_p\mathbf{v_p} 
+\end{equation}
+is called a \textbf{linear combination} of $\mathbf{v_1},\dots,\mathbf{v_p}$ with weights $c_1,\dots,c_p$.
+
+\hfill \newline If $\mathbf{v_1},\dots,\mathbf{v_p}$ are in $\Re^n$, then the set of all linear combinations of $\mathbf{v_1},\dots,\mathbf{v_p}$ is denoted by Span\{$\mathbf{v_1},\dots,\mathbf{v_p}$\} and is called the \textbf{subset of $\Re^n$ spanned} by \textbf{$\mathbf{v_1},\dots,\mathbf{v_p}$.}
+
+\hfill \newline A fundamental idea in linear algebra is to view a linear combination of vectors as the product of a matrix and a vector. If $A$ is an $m \times n$ matrix, with columns $\textbf{a}_1,\dots,\textbf{a}_n$, and if \textbf{x} $\in \Re^n$, then $A\textbf{x}$ is the linear combination of the columns of $A$ using the corresponding entries in x as weights. That is, 
+
+\begin{equation}
+    A\textbf{x} = 
+    \begin{bmatrix}
+    \textbf{a}_1 & \cdots & \textbf{a}_n
+    \end{bmatrix}
+    \begin{bmatrix}
+    x_1 \\
+    \vdots \\
+    x_n
+    \end{bmatrix}
+    = x_1\textbf{a}_1 + \cdots + x_n\textbf{a}_n = \textbf{b}.
+\end{equation}
+
+\hfill \newline SUMMARY. \textit{Some Logically Equivalent Statements}.
+\begin{enumerate}
+    \item For each \textbf{b} in $\Re^m$, $A\textbf{x}=\textbf{b}$ has a solution.
+    \item Each \textbf{b} in $\Re^m$ is a linear combination of the columns of $A$.
+    \item The columns of $A$ span $\Re^m$.
+    \item $A$ has a pivot position in every row.
+\end{enumerate}
+
+\hfill \newline To compute $A\textbf{x}$, note that the \textit{i}th entry in take $A\textbf{x}$ is the sum of the products of corresponding entries from row \textit{i} of $A$ and from the vector \textbf{x}.
+
+\hfill \newline An \textbf{identity matrix} $I$ has 1's across it's main diagonal and 0's everywhere else. For example, 
+$I_4 = \begin{Bmatrix}
+    1 & 0 & 0 & 0 \\ 
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+ \end{Bmatrix}$.
+
+\hfill \newline A linear system is said to be \textbf{homogeneous} if it can be written in the form $A\textbf{x} = \textbf{0} \in \Re^m$. Such a system always has the solution $\textbf{x} = \textbf{0} \in \Re^n$, which is called the \textbf{trivial solution}. An important question is whether $\exists$ a \textbf{nontrivial solution} - or, a nonzero solution vector \textbf{x}. A nontrivial solution will exist iff the homogeneous equation has $>$1 free variable.
+
+\hfill \newline The solution set of a homogeneous equation can always be expressed explicitly as Span\{$\mathbf{v_1},\dots,\mathbf{v_p}$\} for suitable vectors $\mathbf{v_1},\dots,\mathbf{v_p}$. If the homogeneous equation has only one free variable, the solution set is a line through the origin; two free variables means the solution set is a plane through the origin. 
+
+\hfill \newline The solution set to a homogeneous equation may be written as
+\begin{equation}
+    \textbf{x} = s\textbf{u} + t\textbf{v}
+\end{equation}
+with $s,t \in \Re$. This solution form is called \textbf{parametric vector form}. To describe the solution set of a \textbf{nonhomogeneous equation} $A\textbf{x}=\textbf{b}$ in parametric vector form, we may write something of the form 
+\begin{equation}
+    \textbf{x} = \textbf{p} + t\textbf{v}
+\end{equation}
+with $t \in \Re$. Geometrically, we are simply translating the solution to the homogeneous equation by some vector \textbf{p}. The above equation is the equation of the line through \textbf{p} parallel to \textbf{v}.
+
+\hfill \newline THEOREM. Suppose the equation $A\textbf{x}=\textbf{b}$ is consistent for some given \textbf{b}, and let \textbf{p} be a solution. Then the solution set of $A\textbf{x}=\textbf{b}$ is the set of all vectors of the form $\textbf{w}=\textbf{p}+\textbf{v}_h$, where $\textbf{v}_h$ is any solution of $A\textbf{x}=\textbf{0}$.
+
+\hfill \newline  An indexed set of vectors \{$\mathbf{v_1},\dots,\mathbf{v_p}$\} $\in \Re^n$ is \textbf{linearly independent} if the vector equation $x_1\textbf{v}_1 + \cdots + x_p\textbf{v}_p = \textbf{0}$ has only the trivial solution. Else, if there exist weights s.t. $c_1\textbf{v}_1 + \cdots + c_p\textbf{v}_p = \textbf{0}$, the set of vectors is \textbf{linearly dependent}. 
+
+\hfill \newline A set of two vectors \{$\textbf{v}_1, \textbf{v}_2$\} is linearly dependent if the vectors are multiples of one another. Else, the set is linearly independent.
+
+\hfill \newline THEOREM. An indexed set $S = $ \{$\mathbf{v_1},\dots,\mathbf{v_p}$\} of 2+ vectors is linearly dependent iff at least one of the vectors in $S$ is a linear combination of the others.
+
+\hfill \newline THEOREM. If a set contains more vectors than there are entries in each vector, then the set is linearly dependent. That is, any set \{$\mathbf{v_1},\dots,\mathbf{v_p}$\} $\in \Re^n$ is linearly dependent if $p>n$.
+
+\hfill \newline THEOREM. If a set $S = $ \{$\mathbf{v_1},\dots,\mathbf{v_p}$\} $\in \Re^n$ contains the zero vector, then the set is linearly dependent.
+
+\hfill \newline A \textbf{transformation} (or \textbf{function} or \textbf{mapping}) $T$ from $\Re^n$ to $\Re^m$ is a rule that assigns to each vector \textbf{x} $\in$ $\Re^n$ a vector $T(\textbf{x})$ $\in \Re^m$. The set $\Re^n$ is the \textbf{domain} of $T$ and the set $\Re^m$ is the \textbf{codomain} of $T$. Notation $T: \Re^n \mapsto \Re^m$ indicates that the domain of $T$ is $\Re^n$ and the codomain is $\Re^m$. For a given \textbf{x}, the corresponding $T(\textbf{x})$ is called the \textbf{image} of \textbf{x} under the action of $T$. The set of all images is called the \textbf{range} of $T$.
+
+\hfill \newline A transformation $T$ is \textbf{linear} if (i) $T(\textbf{u}+\textbf{v})=T(\textbf{u})+T(\textbf{v})$ $\forall$ \textbf{u}, \textbf{v} in the domain of $T$, and (ii) $T(c\textbf{u})=cT(\textbf{u})$ $\forall$ \textbf{u} in the domain of $T$ and all scalars $c$.
+
+\hfill \newline THEOREM. Let $T: \Re^n \mapsto \Re^m$ be a linear transformation. Then there exists a unique matrix $A$ s.t. $T(\textbf{x}) = A\textbf{x}$ $ \forall$ $\textbf{x} \in \Re^n$. In fact, $A$ is the $m \times n$ matrix whose $j$th column is the vector $T(\textbf{e}_j)$ where $\textbf{e}_j$ is the $j$th column of $I_n$:
+\begin{equation}
+    A = 
+    \begin{bmatrix}
+    T(\textbf{e}_1) & \cdots & T(\textbf{e}_n)
+    \end{bmatrix}.
+\end{equation}
+\noindent The matrix $A$ is called the \textbf{standard matrix for the linear transformation} $T$. It is now clear that all linear transformations from $\Re^n$ to $\Re^m$ can be viewed as a matrix transformation $\textbf{x} \mapsto A\textbf{x}$, and vice versa. Properties of $T$ are hence intimately related with properties of $A$. The key to finding $A$ is to simply observe that $T$ is completely determined by what it does to the columns of the $n \times n$ identity matrix $I_n$.
+
+\hfill \newline A mapping $T: \Re^n \mapsto \Re^m$ is said to be \textbf{onto} $\Re^m$ if each \textbf{b} $\in \Re^m$ is the image of \textit{at least one} $\textbf{x} \in \Re^n$. Equivalently, $T$ is onto $\Re^m$ when the range of $T$ is all of the codomain $\Re^m$.
+
+\hfill \newline A mapping $T: \Re^n \mapsto \Re^m$ is said to be \textbf{one-to-one} $\Re^m$ if each \textbf{b} $\in \Re^m$ is the image of \textit{at most one} $\textbf{x} \in \Re^n$. Equivalently, $T$ is one-to-one if, for each \textbf{b} $\in$ $\Re^m$, $T(\textbf{x})=\textbf{b}$ has either a unique solution or none at all. 
+
+\hfill \newline THEOREM. Let $T: \Re^n \mapsto \Re^m$ be a linear transformation. Then $T$ is one-to-one iff the equation $T(\textbf{x})=\textbf{0}$ has only the trivial solution.
+
+\hfill \newline THEOREM. Let $T: \Re^n \mapsto \Re^m$ be a linear transformation, and let $A$ be the standard matrix for $T$. Then: (a) $T$ maps $\Re^n$ onto $\Re^m$ iff the columns of $A$ span $\Re^m$, (b) $T$ is one-to-one iff the columns of $A$ are linearly independent. 
+
+
+
+
+
+
+
+
+\section{Matrix Algebra}
+
+If $A$ is an $m \times n$ matrix, and if $B$ is an $n \times p$ matrix with columns $\textbf{b}_1,\dots,\textbf{b}_p$, then the product $AB$ is the $m \times p$ matrix whose columns are $A\textbf{b}_1,\dots,A\textbf{b}_p$. Essentially, each column of $AB$ is a linear combination of the columns of $A$ using weights from the corresponding column of $B$.
+
+\hfill \newline Row-column rule for computing $AB$: If $(AB)_{ij} = a_{i1}b_{1j} + a_{12}b_{2j} + \cdots + a_{1n}b_{nj}$.
+
+\hfill \newline THEOREM. Let $A$ be an $m \times n$ matrix, and let $B$ and $C$ have sizes for which the indicated sums and products are defined. 
+\begin{enumerate}
+    \item $A(BC)=(AB)C$
+    \item $A(B+C)=AB+AC$
+    \item $(B+C)A = BA + CA$
+    \item $r(AB)=(rA)B = A(rB)$ for any scalar $r$
+    \item $I_mA = A = AI_nh$
+\end{enumerate}
+\noindent Note that $AB \neq BA$ in most cases; that is, they are not commutative.
+
+\hfill \newline Given an $m \times n$ matrix $A$, the \textbf{transpose} of $A$ is the $n \times m$ matrix $A^T$, whose columns are formed from the corresponding rows of $A$.
+
+\hfill \newline THEOREM. Let $A$ and $B$ denote matrices whose sizes are appropriate for the following sums and products.
+\begin{enumerate}
+    \item $(A^T)^T=A$
+    \item $(A+B)^T=A^T+B^T$
+    \item $(rA)^T=rA^T$ for any scalar $r$
+    \item $(AB)^T=B^TA^T$
+\end{enumerate}
+
+\hfill \newline An $n \times n$ matrix $A$ is said to be \textbf{invertible} if there is an $n \times n$ matrix $C$, s.t. $CA=I_n$ and $AC=I_n$. In this case, $C$ is the \textbf{inverse} of $A$. $C$ is uniquely determined by $A$. We denote this $C$ as $A^{-1}$, s.t. $A^{-1}A=I$ and $ AA^{-1} = I$.
+
+\hfill \newline THEOREM. Let $A$ = 
+    $\begin{Bmatrix}
+    a & b \\
+    c & d
+ \end{Bmatrix}$. If $ad-bc = det(A) \neq 0$, then $A$ is invertible and 
+ \begin{equation}
+     A^{-1} = \frac{1}{ad-bc}
+     \begin{Bmatrix}
+    d & -b \\
+    -c & a
+    \end{Bmatrix} =  \frac{1}{det(A)}
+    \begin{Bmatrix}
+    d & -b \\
+    -c & a
+    \end{Bmatrix}
+ \end{equation}If $ad-bc = det(A) = 0$, then $A$ is not invertible. $det(A)$ denotes the \textbf{determinant} of $A$.
+
+ \hfill \newline THEOREM. If $A$ is an invertible $n \times n$ matrix, then for each \textbf{b} $\in \Re^n$, the equation $A\textbf{x} = \textbf{b}$ has the unique solution $\textbf{x} = A^{-1}\textbf{b}$.
+
+ \hfill \newline THEOREM. \textit{Useful facts about invertible matrices}.
+ \begin{enumerate}
+     \item If $A$ is an invertible matrix, then $A^{-1}$ is invertible and $(A^{-1})^{-1}=A$.
+     \item If $A$ and $B$ are $n \times n$ invertible matrices, so is $AB$, and $(AB)^{-1} = B^{-1}A^{-1}$.
+     \item If $A$ is an invertible matrix, so is $A^T$, and $(A^T)^{-1} =(A^{-1})^T$.
+ \end{enumerate}
+
+\hfill \newline THEOREM. An $n \times n$ matrix $A$ is invertible iff $A$ is row equivalent to $I_n$, and in this case, any sequence of elementary row operations that reduces $A$ to $I_n$ also transforms $I_n$ into $A^{-1}$.
+
+\hfill \newline \textbf{Subspaces, bases, dimension, and rank have been deferred to the Vector Spaces portion of these notes.}
+
+
+
+
+
+
+
+
+\section{Vector Spaces}
+A \textbf{vector space} is a nonempty set $V$ of objects, called \textit{vectors}, on which are defined two operations, called \textit{addition} and \textit{scalar multiplication}, subject to 10 axioms listed below. The axioms must hold for all vectors \textbf{u, v} and \textbf{w} in $V$ and for all scalars $c$ and $d$. 
+
+\begin{enumerate}
+    \item $\textbf{u}+\textbf{v} \in V$ 
+    \item $\textbf{u}+\textbf{v}$ =  $\textbf{v}+\textbf{u}$
+    \item $(\textbf{u}+\textbf{v})+\textbf{w}$ = $\textbf{u}+(\textbf{v}+\textbf{w})$
+    \item $\exists$ \textbf{0} $\in$ $V$ s.t. $\textbf{u}+\textbf{0}=\textbf{u}$
+    \item For each \textbf{u} $\in V$, $\exists -\textbf{u} \in V$ s.t. $\textbf{u}+(-\textbf{u})=\textbf{0}$ 
+    \item $c\textbf{u} \in V$
+    \item $c(\textbf{u} +\textbf{v})=c\textbf{u}+c\textbf{v}$
+    \item $(c+d)\textbf{u}=c\textbf{u}+d\textbf{u}$
+    \item $c(d\textbf{u}) = (cd)\textbf{u}$
+    \item $1\textbf{u}=\textbf{u}$
+\end{enumerate}
+
+\noindent A \textbf{subspace} of a vector space $V$ is a subset $H$ of $V$ that has three properties: (a) The zero vector of $V$ is in $H$, (b) H is closed under vector addition, (c) H is closed under scalar multiplication.
+
+\hfill \newline THEOREM. If $\mathbf{v_1},\dots,\mathbf{v_p}$ are in a vector space $V$, then Span\{$\mathbf{v_1},\dots,\mathbf{v_p}$\} is a subspace of $V$. 
+
+\hfill \newline The \textbf{null space} of an $m \times n$ matrix $A$, written as Nul $A$, is the set of all solutions of the homogeneous equation $A\textbf{x}=\textbf{0}$ in $\Re^n$. Equivalently, Nul $A$ is the set of all \textbf{x} in $\Re^n$ that are mapped into the zero vector of $\Re^m$ via the linear transformation $\textbf{x} \mapsto A\textbf{x}$.
+
+\hfill \newline THEOREM. The null space of an $m \times n$ matrix is a subspace of $\Re^n$.
+
+\hfill \newline The \textbf{column space} of an $m \times n$ matrix $A$, written as Col $A$, is the set of all linear combinations of the columns of $A$. If $A = [\textbf{a}_1\cdots \textbf{a}_n]$, then Col $A =$ Span\{$\mathbf{a_1},\dots,\mathbf{a_n}$\}.
+
+\hfill \newline THEOREM. The column space of an $m \times n$ matrix is a subspace of $\Re^m$.
+
+\hfill \newline A \textbf{linear transformation} $T$ from a vector space $V$ to a vector space $W$ is a rule that assigns to each vector \textbf{x} in $V$ a unique vector $T(\textbf{x})$ in $W$, s.t. (i) $T(\textbf{u}+\textbf{v})=T(\textbf{u})+T(\textbf{v})$ $\forall$ \textbf{u}, \textbf{v} $\in$ $V$, and (ii) $T(c\textbf{u})=cT(\textbf{u})$ $\forall$ \textbf{u} $\in$ $V$, scalars $c$.
+
+\hfill \newline The \textbf{kernel} of $T$ is the set of all \textbf{u} in $V$ s.t. $T(\textbf{u})=\textbf{0}$. It is a subspace of $V$. The \textbf{range} of $T$ is the set of all vectors in $W$ of the form $T(\textbf{x})$ for some \textbf{x} in $W$. It is a subspace of $W$.
+
+\hfill \newline Let $H$ be a subspace of a vector space $V$/ A set of vectors $B$ in $V$ is a \textbf{basis} for $H$ if (i) $B$ is a linearly independent set, and (ii) the subspace spanned by $B$ coincides with $H$, equivalently $H =$ Span $B$.
+
+\hfill \newline THEOREM. Let $S = \{\textbf{v}_1,\dots,\textbf{v}_p\}$ be a set in a vector space $V$, and let $H =$ Span$\{\textbf{v}_1,\dots,\textbf{v}_p\}$.
+\begin{enumerate}
+    \item If some $\textbf{v}_k$ in $S$ is a linear combination of the remaining vectors in $S$, then the set formed from $S$ by removing $\textbf{v}_k$ still spans $H$.
+    \item If $H \neq \{\textbf{0}\}$, some subset of $S$ is a basis $H$.
+\end{enumerate}
+
+\hfill \newline THEOREM. The pivot columns of a matrix $A$ form a basis for Col $A$.
+
+\hfill \newline THEOREM. If two matrices $A$ and $B$ are row equivalent, then their row spaces are the same. If $B$ is in echelon form, the nonzero rows $B$ form a basis for the row space of $A$ as well as for that of $B$.
+
+\hfill \newline THEOREM. Let $B = \{\textbf{b}_1,\dots,\textbf{b}_n\}$ be a basis for a vector space $V$. Then for each \textbf{x} in $V$, $\exists$ a unique set of scalars $c_1,\dots,c_n$, s.t. $\textbf{x} = c_1\textbf{b}_1+\cdots+c_n\textbf{b}_n$.
+
+\hfill \newline The scalars $c_1,\dots,c_n$ are the \textbf{coordinates of x relative to the basis $B$}, or the \textbf{$B$-coordinates of x}. 
+
+\hfill \newline If $c_1,\dots,c_n$ are the $B$-coordinates of \textbf{x} then the vector in $\Re^n$: 
+\begin{equation}
+    [\textbf{x}_B] = 
+    \begin{bmatrix}
+    c_1 \\
+    \vdots \\
+    c_n
+    \end{bmatrix}
+\end{equation}
+\noindent is the \textbf{coordinate vector x (relative to $B$)}, or the \textbf{$B$-coordinate vector of x}. The mapping $\textbf{x} \mapsto [\textbf{x}]_B$ is the \textbf{coordinate mapping (determined by $B$)}. 
+
+\hfill \newline Let $P_B = 
+\begin{bmatrix}
+    \textbf{b}_1 & \cdots & \textbf{b}_n
+\end{bmatrix}.$
+Then the vector equation $\textbf{x} = c_1\textbf{b}_1 + \cdots + c_n\textbf{b}_n$ is equivalent to 
+\begin{equation}
+    \textbf{x} = P_B[\textbf{x}]_B.
+\end{equation}
+\noindent $P_B$ is called the \textbf{change-of-coordinates matrix} from $B$ to the standard basis in $\Re^n$. $P_B$ is invertible, so we may also write 
+\begin{equation}
+    P_B^{-1}\textbf{x} = [\textbf{x}]_B
+\end{equation}
+
+\hfill \newline Let $B = \{\textbf{b}_1,\dots,\textbf{b}_n\}$ be a basis for a vector space $V$. Then the coordinate mapping $\textbf{x} \mapsto [\textbf{x}]_B$ is a one-to-one linear transformation from $V$ onto $\Re^n$.
+
+\hfill \newline In general, a one-to-one linear transformation from a vector space $V$ onto a vector space $W$ is called an \textbf{isomorphism} from $V$ onto $W$.
+
+\hfill \newline THEOREM. If a vector space $V$ has a basis $B = \{\textbf{b}_1,\dots,\textbf{b}_n\}$, then any set in $V$ containing more than $n$ vectors must be linearly dependent.
+
+\hfill \newline THEOREM. If a vector space $V$ has a basis of $n$ vectors, then every basis of $V$ must contain exactly $n$ vectors.
+
+\hfill \newline If a vector space $V$ is spanned by a finite set, then $V$ is said to be \textbf{finite-dimensional}, and the \textbf{dimension} of $V$, written as dim $V$, is the number of vectors in a basis for $V$. The dimension of the zero vector space {\textbf{0}} is defined to be zero. If $V$ is not spanned by a finite set, then $V$ is said to be \textbf{infinite-dimensional}.
+
+\hfill \newline THEOREM. Let $H$ be a subspace of a finite-dimensional vector space $V$. Any linearly independent set in $H$ can be expanded, if necessary, to a basis for $H$. Also, $H$ is finite-dimensional and dim $H \leq$ dim $V$. 
+
+\hfill \newline THEOREM. Let $V$ be a $p$-dimensional vector space, $p \geq1$. Any linearly independent set of exactly $p$ elements in $V$. Any set of exactly $p$ elements that spans $V$ is automatically a basis for $V$.
+
+\hfill \newline THEOREM. The \textbf{rank} of an $m \times n$ matrix $A$ is the dimension of the column space and the \textbf{nullity} of $A$ is the dimension of the null space. Alternatively, the rank of an $m \times n$ matrix $A$ is the number of pivot columns and the nullity of $A$ is the number of free variables. Since the dimension of the row space is the number of pivot rows, it is also equal to the rank of $A$.
+
+\hfill \newline THEOREM. \textit{The Rank Theorem.} The dimensions of the column space and the null space of an $m \times n$ matrix $A$ satisfy the equation rank $A$ + nullity $A$ = $n$, where $n$ is the number of columns in $A$.
+
+
+
+
+
+
+
+
+\section{Eigenvalues and Eigenvectors}
+
+$\lambda$ is an \textbf{eigenvalue} of an $n \times n$ matrix $A$ and  \(\textbf{x}\) is the corresponding \textbf{eigenvector} if there is a nontrivial solution to 
+\begin{equation}
+    A \textbf{x} = \lambda \textbf{x}
+\end{equation}
+Equivalently, 
+\begin{equation}
+    (A-\lambda I)\mathbf{x} = \mathbf{0}
+\end{equation}
+The set of all solutions to the above equation is the null space of matrix $A-\lambda I$. So this set is a \textit{subspace} of $\Re^n$ and is called the \textbf{eigenspace} of $A$ corresponding to $\lambda$.
+
+\hfill \newline THEOREM. The eigenvalues of a triangular matrix are the entries on its main diagonal.
+
+\hfill \newline THEOREM. If $\mathbf{v_1},\dots,\mathbf{v_r}$ are eigenvectors that correspond to distinct eigenvalues $\mathbf{\lambda_1},\dots,\mathbf{\lambda_r}$ of an $n \times n$ matrix A, then the set {$\mathbf{v_1},\dots,\mathbf{v_r}$} is linearly independent.
+
+\hfill \newline A scalar $\lambda$ is an eigenvalue of an $n \times n$ matrix $A$ iff $\lambda$ satisfies the \textbf{characteristic equation}
+\begin{equation}
+    det(A-\lambda I) = \mathbf{0}
+\end{equation}
+
+\hfill \newline If $A$ and $B$ are $n \times n$ matrices, then $A$ \textbf{is similar to} $B$ if there is an invertible matrix $P$ such that $P^{-1}AP=B$, or, equivalently, $A = PBP^{-1}$. Writing $Q$ for $P^{-1}$, we have $Q^{-1}BQ=A$. So $B$ is also similar to $A$, and we simply say that $A$ and $B$ \textbf{are similar}. Changing $A$ into $P^{-1}AP$ is called a \textbf{similarity transformation}.
+
+\hfill \newline THEOREM. If $n \times n$ matrices $A$ and $B$ are similar, then they have the same characteristic polynomial and hence the same eigenvalues (with the same multiplicities).
+
+\hfill \newline A square matrix $A$ is \textbf{diagonalizable} if $A$ is similar to a diagonal matrix, that is, if $A=PDP^{-1}$ for some invertible matrix $P$ and some diagonal matrix $D$.
+
+\hfill \newline THEOREM. An $n \times n$ matrix $A$ is diagonalizable iff $A$ has $n$ linearly independent eigenvectors. In fact,  the columns of $P$ are $n$ linearly independent eigenvectors of $A$. In this case, the diagonal entries of $D$ are eigenvalues of $A$ that correspond, respectively, to the eigenvectors in $P$.
+
+\hfill \newline Alternatively, $A$ is diagonalizable iff there are enough eigenvectors to form a basis (called an \textbf{eigenvector basis} of $\Re^n$.
+
+\hfill \newline THEOREM. An $n \times n$ matrix with $n$ distinct eigenvalues is diagonalizable.
+
+\hfill \newline When an $n \times n$ matrix $A$ has $n$ distinct eigenvalues, $P$ is automatically invertible. When $A$ is diagonalizable but has fewer than $n$ distinct eigenvalues, we can still build $P$ in a way that makes $P$ automatically invertible. See the below theorem.
+
+\hfill \newline THEOREM. Let $A$ be an $n \times n$ matrix whose distinct eigenvalues are $\lambda_1,\dots,\lambda_p$. (1) For $1 \leq k \leq p$, the dimension of the eigenspace for $\lambda_k$ is less than or equal to the multiplicity of the eigenvalue $\lambda_k$. (2) The matrix $A$ is diagonalizable iff the sum of the dimensions of the eigenspaces equals $n$, and this happens iff (i) the characteristic polynomial factors completely into linear factors and (ii) the dimension of the eigenspace for each $\lambda_k$ equals the multiplicity of $\lambda_k$. (3) If A is diagonalizable and $B_k$ is a basis for the eigenspace corresponding to $\lambda_k$ for each $k$, then the total collection of vectors in the sets $B_1,\dots,B_p$ forms an eigenvector basis for $\Re^n$.
+
+\section{Orthogonality and Least Squares}
+
+If \textbf{u} and \textbf{v} are vectors in $\Re^n$, the product $\textbf{u}^T\textbf{v}$ is called the \textbf{inner product} (often, the \textbf{dot product}) of \textbf{u} and \textbf{v}, and is often written as \textbf{u} $\cdot$ \textbf{v}.
+\begin{equation}
+    \textbf{u}\cdot\textbf{v}=
+    \begin{bmatrix}
+    u_1 \\
+    \vdots \\
+    u_n
+    \end{bmatrix} \cdot
+    \begin{bmatrix}
+    v_1 \\
+    \vdots \\
+    v_n
+    \end{bmatrix} = 
+    \begin{bmatrix}
+    u_1 & \cdots & u_n
+    \end{bmatrix}
+    \begin{bmatrix}
+    v_1 \\
+    \vdots \\
+    v_n
+    \end{bmatrix}=
+    u_1v_1 + \cdots + u_nv_n.
+\end{equation}
+\hfill \newline THEOREM. Let \textbf{u}, \textbf{v}, and \textbf{w} be vectors in $\Re^n$, and let $c$ be a scalar. Then: \begin{enumerate}
+    \item $\textbf{u}\cdot\textbf{v}=\textbf{v}\cdot\textbf{u}$
+    \item $(\textbf{u}+\textbf{v})\cdot\textbf{w}=\textbf{u}\cdot\textbf{w}+\textbf{v}\cdot\textbf{w}$
+    \item $(c\textbf{u})\cdot\textbf{v} = c(\textbf{u}\cdot\textbf{v}) = \textbf{u} \cdot (c\textbf{v})$
+    \item $\textbf{u}\cdot\textbf{u}\geq0$, and $\textbf{u}\cdot\textbf{u}=0$ iff \textbf{u}$=\textbf{0}$
+\end{enumerate}
+
+\hfill \newline The \textbf{norm} or \textbf{length} of \textbf{v} is the nonnegative scalar $\|\textbf{v}\|$ defined by:
+\begin{equation}
+    \|\textbf{v}\| = \sqrt{\textbf{v}\cdot\textbf{v}} = \sqrt{v_1^2+\cdots+v_n^2}
+\end{equation}
+\noindent A vector whose length is 1 is called a \textbf{unit vector}. By \textbf{normalizing}, that is, by dividing a nonzero vector \textbf{v} by its length, we can obtain the unit vector.
+
+\hfill \newline For \textbf{u} and \textbf{v} in $\Re^n$, the \textbf{distance between u and v}, written as dist(\textbf{u}, \textbf{v}) is the length of the vector $\textbf{u}-\textbf{v}$, $\|\textbf{u}-\textbf{v}\|$.
+
+\hfill \newline Two vectors \textbf{u} and \textbf{v} $\in Re^n$ are \textbf{orthogonal} to each other if \textbf{u}$\cdot$\textbf{v} $=$ 0.
+
+\hfill \newline THEOREM. \textit{The Pythagorean Theorem.} Two vector \textbf{u} and \textbf{v} are orthogonal iff $\|\textbf{u}+\textbf{v}\|^2=\|\textbf{u}\|^2 + \|\textbf{v}\|^2$.
+
+\hfill \newline If a vector \textbf{z} is orthogonal to every vector in a subspace $W$ of $\Re^n$, then \textbf{z} is said to be \textbf{orthogonal to} $W$. The set of all vectors \textbf{z} that are orthogonal to $W$ is called the \textbf{orthogonal complement} of $W$ and is denoted by $W^\perp$.
+
+\hfill \newline Two important facts about $W^\perp$:
+\begin{enumerate}
+    \item A vector \textbf{x} is in $W^\perp$ iff \textbf{x} is orthogonal to every vector in a set that spans $W$.
+    \item $W^\perp$ is a subspace of $\Re^n$.
+\end{enumerate}
+
+\hfill \newline Let $A$ be an $m \times n$ matrix. The orthogonal complement of the row space of $A$ is the null space of $A$, and the orthogonal complement of the column space of $A$ is the null space of $A^T$: (Row $A$)$\perp$ = Nul $A$ and (Col $A$)$^T$ = Nul $A^T$.
+
+\hfill \newline To obtain the angle $\theta$ between two vectors \textbf{u} and \textbf{v}, we may use the relation: 
+\begin{equation}
+    \textbf{u}\cdot\textbf{v} = \|\textbf{u}\|\|\textbf{v}\| \cos\theta
+\end{equation}
+
+\hfill \newline The \textit{Gram-Schmidt process} is a single algorithm for producing an orthogonal or orthonormal basis for any nonzero subspace of $\Re^n$. 
+
+\hfill \newline THEOREM. \textit{The Gram-Schmidt Process}. Given a basis $\{\textbf{x}_1,\dots,\textbf{x}_n\}$ for a nonzero subspace $W$ of $\Re^n$, define
+\begin{equation}
+\begin{split}
+    \textbf{v}_1 = \textbf{x}_1 \\
+    \textbf{v}_2 = \textbf{x}_2 - \frac{\textbf{x}_2 \cdot \textbf{v}_1}{\textbf{v}_1 \cdot \textbf{v}_1}\textbf{v}_1 \\
+    \textbf{v}_3 = \textbf{x}_3 - \frac{\textbf{x}_3 \cdot \textbf{v}_1}{\textbf{v}_1 \cdot \textbf{v}_1}\textbf{v}_1  - \frac{\textbf{x}_3 \cdot \textbf{v}_2}{\textbf{v}_2 \cdot \textbf{v}_2}\textbf{v}_2 \\
+    \vdots \\
+    \textbf{v}_p = \textbf{x}_p - \frac{\textbf{x}_p \cdot \textbf{v}_1}{\textbf{v}_1 \cdot \textbf{v}_1}\textbf{v}_1  - \frac{\textbf{x}_p \cdot \textbf{v}_2}{\textbf{v}_2 \cdot \textbf{v}_2}\textbf{v}_2 - \cdots - \frac{\textbf{x}_p \cdot \textbf{v}_{p-1}}{\textbf{v}_{p-1} \cdot \textbf{v}_{p-1}}\textbf{v}_{p-1} \\
+\end{split}
+\end{equation}
+\noindent Then $\{\textbf{v}_1,\dots,\textbf{v}_p\}$ is an orthogonal basis for $W$. In addition, Span$\{\textbf{v}_1,\dots,\textbf{v}_k\}$ = Span$\{\textbf{x}_1,\dots,\textbf{x}_k\}$ for $1 \leq k \leq p$.
+
+\hfill \newline Inconsistent systems often arise in applications. When a solution is demanded and none exists, the best one can do is to find an \textbf{x} that makes $A\textbf{x}$ as close as possible to $\textbf{b}$. To do so we want to minimize the distance between \textbf{b} and $A\textbf{x}$, $\|\textbf{b}-A\textbf{x}\|$. The adjective ``least-squares" arises from the fact that $\|\textbf{b}-A\textbf{x}\|$ is the square root of a sum of squares.
+
+\hfill \newline If $A$ is $m \times n$ and \textbf{b} $\in \Re^m$, a \textbf{least-squares solution} of A\textbf{x}=\textbf{b} is an $\hat{\textbf{x}} \in \Re^n$ s.t. $\|\textbf{b}-A\hat{\textbf{x}}\| \leq \|\textbf{b}-A\textbf{x}\|$ $\forall$ $\textbf{x} \in \Re^n$.
+
+\hfill \newline The most important aspect of the least-squares problem is that no matter what \textbf{x} we select, the vector A\textbf{x} will necessarily be in the column space, Col $A$. So we seek an \textbf{x} that makes $A\textbf{x}$ the closest point in Col $A$ to \textbf{b}.
+
+\hfill \newline Let $\hat{\textbf{b}} = proj_{Col A}\textbf{b}$. Because $\hat{\textbf{b}}$ is in the column space of $A$, $A\textbf{x}=\hat{\textbf{b}}$ is consistent, and there is an $\hat{\textbf{x}} \in \Re^n$ s.t.  $A\hat{\textbf{x}}=\hat{\textbf{b}}$. Since $\hat{\textbf{b}}$ is the closest point in Col $A$ to \textbf{b}, the vector $\hat{\textbf{x}}$ is a least-squares solution of $A\textbf{x}=\textbf{b}$. Such an $\hat{\textbf{x}} \in \Re^n$ is a list of weights that will build $\hat{\textbf{b}}$ out of the columns of $A$.
+
+\hfill \newline Suppose $\hat{\textbf{x}}$ satisfies $A\hat{\textbf{x}}=\hat{\textbf{b}}$. By the Orthogonal Decomposition Theorem, $\hat{\textbf{b}}$ has the property that \textbf{b} - $\hat{\textbf{b}}$ is orthogonal to Col $A$, so \textbf{b} - $A\hat{\textbf{x}}$ is orthogonal to each column of $A$. If $\textbf{a}_j$ is any column of $A$, then $\textbf{a}_j\cdot(\textbf{b}-A\hat{\textbf{x}}) = \textbf{0}$, and $\textbf{a}_j^T(\textbf{b}-A\hat{\textbf{x}}) = \textbf{0}$. Since each $\textbf{a}_j^T$ is a row of $A^T$, 
+\begin{equation}
+    A^T(\textbf{b}-A\hat{\textbf{x}}) = \textbf{0}.
+\end{equation}
+\noindent This calculation shows that each least-squares solution of $A\textbf{x}=\textbf{b}$ satisfies
+\begin{equation}
+    A^TA\textbf{x}=A^T\textbf{b}
+\end{equation}
+\noindent This matrix equation represents a system of equations called the \textbf{normal equations} for $A\textbf{x}=\textbf{b}$, with solution denoted $\hat{\textbf{x}}$.
+
+\hfill \newline THEOREM. The set of least-squares solutions of $A\textbf{x}=\textbf{b}$ coincides with the nonempty set of solutions of the normal equations $A^TA\textbf{x}=A^T\textbf{b}$.
+
+\hfill \newline THEOREM. Let $A$ be an $m \times n$ matrix. The following statements are logically equivalent: \begin{enumerate}
+    \item $A\textbf{x}=\textbf{b}$ has a unique least-squares solution for each \textbf{b} $\in \Re^m$.
+    \item The columns of $A$ are linearly independent.
+    \item The matrix $A^TA$ is invertible.
+\end{enumerate}
+\noindent When these statements are true, the least-squares solution $\hat{\textbf{x}}$ is given by
+\begin{equation}
+    \hat{\textbf{x}} = (A^TA)^{-1}A^T\textbf{b}
+\end{equation}
+\noindent The distance $\|\textbf{b}-A\textbf{x}\|$ is called the \textbf{least-squares error} of this approximation.
+
+
+
+
+
+
+
+    
+
+
+
+\end{document}
